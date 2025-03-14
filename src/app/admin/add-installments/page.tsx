@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import style from "../../loader.module.css";
+
 // تعريف المخطط باستخدام Zod
 const addInstallmentSchema = z.object({
   name: z.string().min(1, "يجب إدخال اسم عميل الاقساط"),
@@ -18,7 +19,7 @@ const addInstallmentSchema = z.object({
 // استنتاج النوع من Zod schema
 type InstallmentFormData = z.infer<typeof addInstallmentSchema>;
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const {
@@ -29,6 +30,7 @@ const page = () => {
     mode: "onChange",
     resolver: zodResolver(addInstallmentSchema),
   });
+
   const onSubmit: SubmitHandler<InstallmentFormData> = async (data) => {
     if (!data.phone) {
       data = {
@@ -41,15 +43,19 @@ const page = () => {
       const response = await axios.post(`${DOMAIN}/api/installments`, data);
       toast.success("تم إضافة عميل الاقساط");
       router.replace("/admin/installments");
-      setLoading(false);
       router.refresh();
-    } catch (error: any) {
-      const message = error?.response?.data.message;
-      if (message) toast.error(message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data.message;
+        if (message) toast.error(message);
+      } else {
+        console.error("An unexpected error occurred:", error);
+      }
+    } finally {
       setLoading(false);
-      console.log(error);
     }
   };
+
   return (
     <div className="p-5">
       <h2 className="text-xl sm:text-2xl font-bold mx-5">
@@ -122,4 +128,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

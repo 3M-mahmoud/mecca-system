@@ -8,6 +8,7 @@ import axios from "axios";
 import { DOMAIN } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import style from "../../loader.module.css";
+
 // تعريف schema باستخدام Zod
 const productSchema = z.object({
   name: z.string().min(1, "الاسم مطلوب"),
@@ -34,16 +35,19 @@ const AddProductForm = () => {
   const onSubmit: SubmitHandler<ProductFormData> = async (data) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${DOMAIN}/api/products`, data);
+      await axios.post(`${DOMAIN}/api/products`, data); // Removed unused `response`
       toast.success("تم إضافة المنتج");
       router.replace("/admin");
-      setLoading(false);
       router.refresh();
-    } catch (error: any) {
-      const message = error?.response?.data.message;
-      if (message) toast.error(message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data.message;
+        if (message) toast.error(message);
+      } else {
+        console.error("An unexpected error occurred:", error);
+      }
+    } finally {
       setLoading(false);
-      console.log(error);
     }
   };
 
