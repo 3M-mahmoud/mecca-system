@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @db.VarChar(100) // maxLength(100)
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id          Int          @id @default(autoincrement())
+  name        String
+  price       Float
+  count       Int
+  category    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  withdrawals Withdrawal[]
+  supplies    Supply[]
+}
+
+model TraderCustomer {
+  id          Int          @id @default(autoincrement())
+  name        String
+  phone       String?
+  email       String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  withdrawals Withdrawal[]
+  payments    Payment[]
+  balance     Float        @default(0.0)
+  Supply      Supply[]
+}
+
+model RemainingCustomer {
+  id          Int          @id @default(autoincrement())
+  name        String
+  phone       String?
+  email       String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  withdrawals Withdrawal[]
+  payments    Payment[]
+  balance     Float        @default(0.0)
+}
+
+model Withdrawal {
+  id            Int                  @id @default(autoincrement())
+  productId     Int?
+  product       Product?             @relation(fields: [productId], references: [id])
+  quantity      Int
+  price         Float                @default(0)
+  description   String               @default(" ")
+  name          String               @default(" ")
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  traderId      Int?
+  trader        TraderCustomer?      @relation(fields: [traderId], references: [id])
+  remainingId   Int?
+  remaining     RemainingCustomer?   @relation(fields: [remainingId], references: [id])
+  InstallmentId Int?
+  Installment   InstallmentCustomer? @relation(fields: [InstallmentId], references: [id])
+}
+
+model Payment {
+  id          Int                @id @default(autoincrement())
+  amount      Float
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  traderId    Int?
+  trader      TraderCustomer?    @relation(fields: [traderId], references: [id])
+  remainingId Int?
+  remaining   RemainingCustomer? @relation(fields: [remainingId], references: [id])
+}
+
+model Supply {
+  id               Int             @id @default(autoincrement())
+  productId        Int?
+  product          Product?        @relation(fields: [productId], references: [id])
+  quantity         Int
+  price            Float           @default(0)
+  description      String          @default(" ")
+  name             String          @default(" ")
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  TraderCustomer   TraderCustomer? @relation(fields: [traderCustomerId], references: [id])
+  traderCustomerId Int?
+}
+
+model InstallmentCustomer {
+  id           Int           @id @default(autoincrement())
+  name         String
+  balance      Float
+  phone        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  installments Installment[]
+  withdrawals  Withdrawal[]
+}
+
+model Installment {
+  id         Int                  @id @default(autoincrement())
+  customerId Int
+  amount     Float
+  dueDate    DateTime
+  isPaid     Boolean              @default(false)
+  customer   InstallmentCustomer? @relation(fields: [customerId], references: [id])
+}
