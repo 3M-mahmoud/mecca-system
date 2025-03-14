@@ -2,7 +2,6 @@
 import { DOMAIN } from "@/utils/constants";
 import { Product } from "@/utils/types";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation"; // ✅ استبدال next/router بـ next/navigation
 import React from "react";
 import Swal from "sweetalert2";
