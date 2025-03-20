@@ -1,1 +1,1 @@
-export const DOMAIN: string = "http://localhost:5000";
+export const DOMAIN: string = "https://mecca-system.vercel.app";
