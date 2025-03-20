@@ -13,7 +13,6 @@ export default function WithdrawTrader() {
   const text = searchParams.get("description") || "";
   const supplyPrice = searchParams.get("price") || "";
   const supplyName = searchParams.get("name") || "";
-  const productId = searchParams.get("productId") || "";
   const supplyId = searchParams.get("id") || "";
   const traderId = searchParams.get("traderId") || "";
   const productQuantity = searchParams.get("quantity") || "";
@@ -44,7 +43,7 @@ export default function WithdrawTrader() {
 
   const handleWithdraw = async () => {
     const payload = {
-      productId: selectedProduct?.id || +productId,
+      productId: selectedProduct?.id || null,
       quantity: +quantity || 1,
       description,
       price: +price,
@@ -96,7 +95,7 @@ export default function WithdrawTrader() {
             }`}
             onClick={() => setOperationType("withdrawProduct")}
           >
-            سحب منتج
+            وارد منتج
           </button>
         </div>
       </div>

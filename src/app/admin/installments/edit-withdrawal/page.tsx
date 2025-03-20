@@ -1,7 +1,7 @@
 import EditWithdrawal from "@/components/EditWithdrawal";
 
-const page = () => {
+const Page = () => {
   return <EditWithdrawal />;
 };
 
-export default page;
+export default Page;

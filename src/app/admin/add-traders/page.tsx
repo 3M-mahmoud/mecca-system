@@ -11,14 +11,14 @@ import style from "../../loader.module.css";
 // تعريف المخطط باستخدام Zod
 const addTraderSchema = z.object({
   name: z.string().min(1, "يجب إدخال اسم التاجر"),
-  balance: z.number().min(1, "يجب إدخال رصيد التاجر"),
+  balance: z.number(),
   phone: z.string().optional(),
 });
 
 // استنتاج النوع من Zod schema
 type TraderFormData = z.infer<typeof addTraderSchema>;
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const {
@@ -38,7 +38,7 @@ const page = () => {
     }
     try {
       setLoading(true);
-      const response = await axios.post(`${DOMAIN}/api/traders`, data);
+       await axios.post(`${DOMAIN}/api/traders`, data);
       toast.success("تم إضافة التاجر");
       router.replace("/admin/traders");
       setLoading(false);
@@ -131,4 +131,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

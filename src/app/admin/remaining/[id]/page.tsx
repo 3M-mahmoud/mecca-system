@@ -1,9 +1,11 @@
 import RemainingDetails from "@/components/RemainingDetails";
-
-type props = {
-  params: { id: string };
+type PageProps = {
+  params: {
+    id: string;
+  };
 };
-const page = async ({ params }: props) => {
+
+const Page = async ({ params }: PageProps) => {
   const { id } = await params;
   return (
     <div>
@@ -12,4 +14,4 @@ const page = async ({ params }: props) => {
   );
 };
 
-export default page;
+export default Page;

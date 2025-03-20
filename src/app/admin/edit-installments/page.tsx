@@ -19,7 +19,7 @@ const editInstallmentSchema = z.object({
 // استنتاج النوع من Zod schema
 type InstallmentFormData = z.infer<typeof editInstallmentSchema>;
 
-const page = () => {
+const Page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -140,4 +140,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

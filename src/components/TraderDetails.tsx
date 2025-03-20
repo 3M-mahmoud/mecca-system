@@ -94,6 +94,7 @@ export default function TraderDetails({ id, typeUser }: props) {
     const fetchProduct = async () => {
       const response = await fetch(`${DOMAIN}/api/traders/${id}`);
       const data: TraderResponse = await response.json();
+      console.log(data);
       setTrader(data);
       setFilteredData(data.withdrawals);
     };

@@ -22,7 +22,7 @@ export const createProductSchema = z.object({
   quantity: z.number({
     required_error: "الكمية مطلوبة",
     invalid_type_error: "الكمية يجب ان تكون رقم",
-  }),
+  }).min(0, {message: "يجب الكمية تكون قيمة موجبة"}),
 });
 
 // Register Schema

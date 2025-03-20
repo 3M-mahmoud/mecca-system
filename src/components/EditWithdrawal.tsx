@@ -13,7 +13,6 @@ export default function EditWithdrawal() {
   const text = searchParams.get("description") || "";
   const withdrawalPrice = searchParams.get("price") || "";
   const withdrawalName = searchParams.get("name") || "";
-  const productId = searchParams.get("productId") || "";
   const withdrawalId = searchParams.get("id") || "";
   const remainingId = searchParams.get("remainingId") || "";
   const traderId = searchParams.get("traderId") || "";
@@ -46,7 +45,7 @@ export default function EditWithdrawal() {
 
   const handleWithdraw = async () => {
     const payload = {
-      productId: selectedProduct?.id || +productId,
+      productId: selectedProduct?.id || null,
       quantity: +quantity || 1,
       description,
       price: +price,

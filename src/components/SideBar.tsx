@@ -6,24 +6,23 @@ import { useState } from "react";
 // import icons
 import { AiOutlineProduct } from "react-icons/ai";
 import { TbBrandProducthunt } from "react-icons/tb";
-import { FaEdit } from "react-icons/fa";
 import { PiTrademarkRegistered } from "react-icons/pi";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { LiaUserEditSolid } from "react-icons/lia";
+import { useEffect } from "react";
 
 const SideBar = () => {
   const pathname = usePathname();
   const basePath = pathname.split("/").slice(0, 2).join("/");
-  const [itemSelected, setItemSelected] = useState(
-    localStorage.getItem("linkItemActive")
-      ? localStorage.getItem("linkItemActive")
-      : 1
-  );
-  const linkItemActive = localStorage.getItem("linkItemActive");
+  const [linkItemActive, setItemSelected] = useState<string | null>(null);
+  // const c = localStorage.getItem("linkItemActive");
   const handleClick = (index: string) => {
-    localStorage.setItem("linkItemActive", index);
+    // localStorage.setItem("linkItemActive", index);
     setItemSelected(index);
   };
+  useEffect(() => {
+    // const storedItem = localStorage.getItem("linkItemActive");
+    setItemSelected("1");
+  }, []);
   return (
     <div className="sidebar max-w-64 p-4 shadow-xl bg-white relative">
       <h3 className="mt-0 mb-8 text-center text-sm md:text-xl font-bold">
@@ -124,7 +123,7 @@ const SideBar = () => {
           >
             <PiTrademarkRegistered />
             <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
-            الاقساط
+              الاقساط
             </span>
           </Link>
         </li>

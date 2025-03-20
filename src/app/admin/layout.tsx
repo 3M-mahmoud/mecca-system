@@ -1,4 +1,5 @@
 import SideBar from "@/components/SideBar";
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -10,7 +11,11 @@ export default function RootLayout({
       <div className="flex min-h-screen">
         <SideBar />
         <div className="content w-full overflow-hidden">
-          <h3>{children}</h3>
+          <h3>
+            <Suspense fallback={<div>جارِ التحميل...</div>}>
+              {children}
+            </Suspense>
+          </h3>
         </div>
       </div>
     </div>

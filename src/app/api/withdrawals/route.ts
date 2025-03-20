@@ -32,8 +32,6 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    const withdrawals = await prisma.withdrawal.findMany();
-
     // استخراج البيانات من الطلب
     const body = (await request.json()) as CreateWithdrawalsDto;
 

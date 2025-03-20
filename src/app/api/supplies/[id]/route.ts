@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/db";
-import { UpdatedSuppliesDto} from "@/utils/dtos";
-import {
-  updateSupplySchema,
-} from "@/utils/validationSchemas";
+import { UpdatedSuppliesDto } from "@/utils/dtos";
+import { updateSupplySchema } from "@/utils/validationSchemas";
 
 interface props {
   params: { id: string };
@@ -99,6 +97,15 @@ export async function PUT(request: NextRequest, { params }: props) {
           }
         }
       }
+    } else {
+      if (supply.productId) {
+        await prisma.product.update({
+          where: { id: supply.productId },
+          data: {
+            count: { decrement: supply.quantity },
+          },
+        });
+      }
     }
     if (body.traderId) {
       const trader = await prisma.traderCustomer.findUnique({
@@ -142,6 +149,7 @@ export async function PUT(request: NextRequest, { params }: props) {
       data: {
         name: body.name,
         description: body.description,
+        productId: body.productId,
         price: body.price,
         quantity: body.quantity,
         traderCustomerId: body.traderId,

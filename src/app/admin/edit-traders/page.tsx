@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
@@ -19,17 +19,11 @@ const editTraderSchema = z.object({
 // استنتاج النوع من Zod schema
 type TraderFormData = z.infer<typeof editTraderSchema>;
 
-const page = () => {
-  const searchParams = useSearchParams();
+const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const traderId = searchParams.get("id");
-  const defaultValues = {
-    name: searchParams.get("name") || "",
-    balance: Number(searchParams.get("balance")) || 0,
-    phone: searchParams.get("phone") || "",
-  };
+  const [traderId, setTraderId] = useState<string | null>(null);
 
   const {
     register,
@@ -38,18 +32,19 @@ const page = () => {
     formState: { errors, isSubmitting },
   } = useForm<TraderFormData>({
     mode: "onChange",
-    resolver: zodResolver(editTraderSchema),
-    defaultValues,
+    resolver: zodResolver(editTraderSchema)
   });
 
   useEffect(() => {
-    // تحديث القيم عند فتح الصفحة
-    setValue("name", defaultValues.name);
-    setValue("balance", defaultValues.balance);
-    if (defaultValues.phone == "null") {
-      setValue("phone", "");
-    } else {
-      setValue("phone", defaultValues.phone);
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setTraderId(params.get("id"));
+      setValue("name", params.get("name") || "");
+      setValue("balance", Number(params.get("balance")) || 0);
+      setValue(
+        "phone",
+        params.get("phone") === "null" ? "" : params.get("phone") || ""
+      );
     }
   }, []);
 
@@ -151,4 +146,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

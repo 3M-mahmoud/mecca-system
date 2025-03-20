@@ -21,7 +21,7 @@ const formatDate = (isoDate: string) => {
   }).format(new Date(isoDate));
 };
 
-const page = () => {
+const Page = () => {
   const [installments, setInstallments] = useState<Installments[]>([]);
   const [search, setSearch] = useState("");
   const router = useRouter();
@@ -187,4 +187,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

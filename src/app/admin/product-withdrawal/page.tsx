@@ -65,7 +65,7 @@ export default function WithdrawProduct() {
     try {
       setLoading(true);
       console.log(payload);
-      const data = await axios.post(`${DOMAIN}/api/withdrawals`, payload);
+       await axios.post(`${DOMAIN}/api/withdrawals`, payload);
       toast.success("تم سحب المنتج بنجاح!");
       router.replace("/admin");
       router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة

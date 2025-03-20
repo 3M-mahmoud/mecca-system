@@ -1,11 +1,14 @@
 import InstallmentDetails from "@/components/InstallmentDetails";
-
-type props = {
-  params: { id: string };
+type PageProps = {
+  params: {
+    id: string;
+  };
 };
-const page = async ({ params }: props) => {
-  const { id } = await params;
+
+const Page = async ({ params }: PageProps) => {
+  const { id } = params;
+
   return <InstallmentDetails id={id} typeUser="admin" />;
 };
 
-export default page;
+export default Page;

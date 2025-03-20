@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import { DOMAIN } from "@/utils/constants";
 import { Traders } from "@/utils/types";
 import axios from "axios";
@@ -21,7 +22,7 @@ const formatDate = (isoDate: string) => {
   }).format(new Date(isoDate));
 };
 
-const page = () => {
+const Page = () => {
   const [traders, setTraders] = useState<Traders[]>([]);
   const [search, setSearch] = useState("");
   const router = useRouter();
@@ -186,4 +187,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

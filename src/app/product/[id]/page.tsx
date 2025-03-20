@@ -3,7 +3,7 @@ import React from "react";
 type props = {
   params: { id: string };
 };
-const page = async ({ params }: props) => {
+const Page = async ({ params }: props) => {
   const { id } = await params;
   return (
     <div className="py-32">
@@ -12,4 +12,4 @@ const page = async ({ params }: props) => {
   );
 };
 
-export default page;
+export default Page;

@@ -75,6 +75,19 @@ export async function PUT(request: NextRequest, { params }: props) {
       if (product) {
         if (body.productId === withdrawal.productId) {
           if (body.quantity) {
+            const productWithdrawal = await prisma.product.findUnique({
+              where: { id: withdrawal.productId },
+            });
+
+            if (
+              productWithdrawal &&
+              productWithdrawal?.count < body.quantity - withdrawal.quantity
+            ) {
+              return NextResponse.json(
+                { message: "الكمية غير متوفرة" },
+                { status: 400 }
+              );
+            }
             await prisma.product.update({
               where: { id: withdrawal.productId },
               data: {
@@ -91,12 +104,28 @@ export async function PUT(request: NextRequest, { params }: props) {
             });
           }
           if (body.quantity) {
-            await prisma.product.update({
-              where: { id: body.productId },
-              data: { count: { decrement: body.quantity } },
-            });
+            if (product.count >= body.quantity) {
+              await prisma.product.update({
+                where: { id: body.productId },
+                data: { count: { decrement: body.quantity } },
+              });
+            } else {
+              return NextResponse.json(
+                { message: "الكمية غير متوفرة" },
+                { status: 400 }
+              );
+            }
           }
         }
+      }
+    } else {
+      if (withdrawal.productId) {
+        await prisma.product.update({
+          where: { id: withdrawal.productId },
+          data: {
+            count: { increment: withdrawal.quantity },
+          },
+        });
       }
     }
     if (body.traderId) {
@@ -217,6 +246,7 @@ export async function PUT(request: NextRequest, { params }: props) {
         name: body.name,
         description: body.description,
         price: body.price,
+        productId: body.productId,
         quantity: body.quantity,
         traderId: body.traderId,
         remainingId: body.remainingId,

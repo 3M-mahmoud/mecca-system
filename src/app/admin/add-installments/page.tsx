@@ -40,7 +40,7 @@ const Page = () => {
     }
     try {
       setLoading(true);
-      const response = await axios.post(`${DOMAIN}/api/installments`, data);
+       await axios.post(`${DOMAIN}/api/installments`, data);
       toast.success("تم إضافة عميل الاقساط");
       router.replace("/admin/installments");
       router.refresh();

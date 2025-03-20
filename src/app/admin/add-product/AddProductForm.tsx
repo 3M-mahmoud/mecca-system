@@ -14,7 +14,7 @@ const productSchema = z.object({
   name: z.string().min(1, "الاسم مطلوب"),
   price: z.number().min(0, "السعر يجب أن يكون أكبر من أو يساوي الصفر"),
   category: z.string().min(1, "الصنف مطلوب"),
-  quantity: z.number().min(1, "الكمية يجب أن تكون أكبر من أو تساوي 1"),
+  quantity: z.number().min(0, "يجب ان تكون الكمية قيمة موجبة"),
 });
 
 // استنتاج النوع من Zod schema

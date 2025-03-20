@@ -5,6 +5,11 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 export default prisma;
 
+// npx prisma generate && next build && next lint --fix
+// npm run build -- --no-lint
+// rm -rf .next
+
+
 // use code development
 
 // import { PrismaClient } from "@prisma/client";
