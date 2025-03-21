@@ -42,29 +42,31 @@ export default function EditSupply() {
   };
 
   const handleWithdraw = async () => {
-    const payload = {
-      productId: selectedProduct?.id || null,
-      quantity: +quantity || 1,
-      description,
-      price: +price,
-      traderId: +traderId || null,
-      name: supplyName || null,
-    };
-
-    try {
-      console.log(payload);
-      setLoading(true);
-      console.log(payload);
-      await axios.put(`${DOMAIN}/api/supplies/${supplyId}`, payload);
-      toast.success("تمت العملية بنجاح!");
-      router.replace("/admin/traders");
-    } catch (error: any) {
-      console.log(error);
-      const message =
-        error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية الوراد";
-      toast.error(message);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload = {
+        productId: selectedProduct?.id || null,
+        quantity: +quantity || 1,
+        description,
+        price: +price,
+        traderId: +traderId || null,
+        name: supplyName || null,
+      };
+  
+      try {
+        console.log(payload);
+        setLoading(true);
+        console.log(payload);
+        await axios.put(`${DOMAIN}/api/supplies/${supplyId}`, payload);
+        toast.success("تمت العملية بنجاح!");
+        router.replace("/admin/traders");
+      } catch (error: any) {
+        console.log(error);
+        const message =
+          error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية الوراد";
+        toast.error(message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

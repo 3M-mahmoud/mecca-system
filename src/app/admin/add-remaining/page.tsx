@@ -32,27 +32,29 @@ const Page = () => {
   });
 
   const onSubmit: SubmitHandler<RemainingFormData> = async (data) => {
-    if (!data.phone) {
-      data = {
-        name: data.name,
-        balance: data.balance,
-      };
-    }
-    try {
-      setLoading(true);
-      await axios.post(`${DOMAIN}/api/remaining`, data); // Removed unused `response`
-      toast.success("تم إضافة عميل البواقي");
-      router.replace("/admin/remaining");
-      router.refresh();
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        const message = error.response?.data.message;
-        if (message) toast.error(message);
-      } else {
-        console.error("An unexpected error occurred:", error);
+    if(!loading) {
+      if (!data.phone) {
+        data = {
+          name: data.name,
+          balance: data.balance,
+        };
       }
-    } finally {
-      setLoading(false);
+      try {
+        setLoading(true);
+        await axios.post(`${DOMAIN}/api/remaining`, data); // Removed unused `response`
+        toast.success("تم إضافة عميل البواقي");
+        router.replace("/admin/remaining");
+        router.refresh();
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          const message = error.response?.data.message;
+          if (message) toast.error(message);
+        } else {
+          console.error("An unexpected error occurred:", error);
+        }
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

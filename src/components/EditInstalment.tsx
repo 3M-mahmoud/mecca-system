@@ -41,24 +41,26 @@ const EditInstalment = () => {
   });
 
   const onSubmit: SubmitHandler<InstallmentFormData> = async (data) => {
-    const payload: Payment = {
-      amount: data.amount,
-      isPaid: status,
-    };
-    if (data.dueDate && data.dueDate?.length > 0) {
-      payload.dueDate = data.dueDate;
-    }
-    try {
-      setLoading(true);
-      await axios.put(`${DOMAIN}/api/instalment/${id}`, payload);
-      toast.success("تم تعديل القسط بنجاح!");
-      router.replace("/admin/installments");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
-      console.error(error);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload: Payment = {
+        amount: data.amount,
+        isPaid: status,
+      };
+      if (data.dueDate && data.dueDate?.length > 0) {
+        payload.dueDate = data.dueDate;
+      }
+      try {
+        setLoading(true);
+        await axios.put(`${DOMAIN}/api/instalment/${id}`, payload);
+        toast.success("تم تعديل القسط بنجاح!");
+        router.replace("/admin/installments");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

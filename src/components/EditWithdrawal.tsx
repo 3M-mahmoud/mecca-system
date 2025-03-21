@@ -44,30 +44,32 @@ export default function EditWithdrawal() {
   };
 
   const handleWithdraw = async () => {
-    const payload = {
-      productId: selectedProduct?.id || null,
-      quantity: +quantity || 1,
-      description,
-      price: +price,
-      remainingId: +remainingId || null,
-      InstallmentId: +installmentId || null,
-      traderId: +traderId || null,
-      name: withdrawalName || null,
-    };
-
-    try {
-      setLoading(true);
-      console.log(payload);
-      await axios.put(`${DOMAIN}/api/withdrawals/${withdrawalId}`, payload);
-      toast.success("تمت العملية بنجاح!");
-      router.replace("/admin");
-    } catch (error: any) {
-      console.log(error);
-      const message =
-        error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية السحب";
-      toast.error(message);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload = {
+        productId: selectedProduct?.id || null,
+        quantity: +quantity || 1,
+        description,
+        price: +price,
+        remainingId: +remainingId || null,
+        InstallmentId: +installmentId || null,
+        traderId: +traderId || null,
+        name: withdrawalName || null,
+      };
+  
+      try {
+        setLoading(true);
+        console.log(payload);
+        await axios.put(`${DOMAIN}/api/withdrawals/${withdrawalId}`, payload);
+        toast.success("تمت العملية بنجاح!");
+        router.replace("/admin");
+      } catch (error: any) {
+        console.log(error);
+        const message =
+          error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية السحب";
+        toast.error(message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

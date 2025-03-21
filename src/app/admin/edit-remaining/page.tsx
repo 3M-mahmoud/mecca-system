@@ -49,18 +49,19 @@ const Page = () => {
   
   const onSubmit: SubmitHandler<RemainingFormData> = async (data) => {
     if (!remainingId) return;
-
-    try {
-      setLoading(true);
-      await axios.put(`${DOMAIN}/api/remaining/${remainingId}`, data);
-      toast.success("تم تحديث عميل البواقي بنجاح!");
-      router.replace("/admin/remaining");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
-      console.error(error);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      try {
+        setLoading(true);
+        await axios.put(`${DOMAIN}/api/remaining/${remainingId}`, data);
+        toast.success("تم تحديث عميل البواقي بنجاح!");
+        router.replace("/admin/remaining");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

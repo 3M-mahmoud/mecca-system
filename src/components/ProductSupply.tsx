@@ -44,31 +44,33 @@ export default function ProductSupply() {
 
   // دالة إرسال البيانات للـ API
   const handleWithdraw = async () => {
-    const customer = customers.find(
-      (customer) => customer.id === selectedCustomer
-    );
-    const payload = {
-      productId: +id,
-      [TraderType]: selectedCustomer,
-      quantity,
-      description,
-      price: +price,
-      name: customer?.name || name,
-    };
-    try {
-      setLoading(true);
-
-      await axios.post(`${DOMAIN}/api/supplies`, payload);
-      toast.success("تم وارد المنتج بنجاح!");
-      router.replace("/admin");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message || "حدث خطأ أثناء عملية الواردات"
+    if(!loading) {
+      const customer = customers.find(
+        (customer) => customer.id === selectedCustomer
       );
-      console.error(error);
-    } finally {
-      setLoading(false);
+      const payload = {
+        productId: +id,
+        [TraderType]: selectedCustomer,
+        quantity,
+        description,
+        price: +price,
+        name: customer?.name || name,
+      };
+      try {
+        setLoading(true);
+  
+        await axios.post(`${DOMAIN}/api/supplies`, payload);
+        toast.success("تم وارد المنتج بنجاح!");
+        router.replace("/admin");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data?.message || "حدث خطأ أثناء عملية الواردات"
+        );
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

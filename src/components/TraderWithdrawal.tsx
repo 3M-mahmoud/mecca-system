@@ -35,28 +35,30 @@ export default function TraderWithdrawal() {
   };
 
   const handleWithdraw = async () => {
-    const payload = {
-      productId: selectedProduct?.id || null,
-      quantity: quantity || 1,
-      description,
-      price: +price,
-      traderId: +traderId || null,
-      name: traderName,
-    };
-
-    try {
-      setLoading(true);
-      console.log(payload);
-      await axios.post(`${DOMAIN}/api/withdrawals`, payload);
-      toast.success("تمت العملية بنجاح!");
-      router.replace("/admin/traders");
-    } catch (error: any) {
-      console.log(error);
-      const message =
-        error?.response?.data?.message || "حدث خطأ أثناء عملية السحب";
-      toast.error(message);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload = {
+        productId: selectedProduct?.id || null,
+        quantity: quantity || 1,
+        description,
+        price: +price,
+        traderId: +traderId || null,
+        name: traderName,
+      };
+  
+      try {
+        setLoading(true);
+        console.log(payload);
+        await axios.post(`${DOMAIN}/api/withdrawals`, payload);
+        toast.success("تمت العملية بنجاح!");
+        router.replace("/admin/traders");
+      } catch (error: any) {
+        console.log(error);
+        const message =
+          error?.response?.data?.message || "حدث خطأ أثناء عملية السحب";
+        toast.error(message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

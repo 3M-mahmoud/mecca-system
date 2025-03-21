@@ -31,21 +31,23 @@ const CreateInstalment = () => {
 
   const onSubmit: SubmitHandler<InstallmentFormData> = async (data) => {
     if (!InstallmentId) return;
-    const payload = {
-      ...data,
-      customerId: +InstallmentId,
-    };
-    try {
-      setLoading(true);
-      await axios.post(`${DOMAIN}/api/instalment`, payload);
-      toast.success("تم إنشاء الاقساط بنجاح!");
-      router.replace("/admin/installments");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
-      console.error(error);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload = {
+        ...data,
+        customerId: +InstallmentId,
+      };
+      try {
+        setLoading(true);
+        await axios.post(`${DOMAIN}/api/instalment`, payload);
+        toast.success("تم إنشاء الاقساط بنجاح!");
+        router.replace("/admin/installments");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

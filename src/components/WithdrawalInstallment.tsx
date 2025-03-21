@@ -36,27 +36,29 @@ export default function WithdrawalInstallment() {
   };
 
   const handleWithdraw = async () => {
-    const payload = {
-      productId: selectedProduct?.id || null,
-      quantity: quantity || 1,
-      description,
-      price: +price,
-      installmentId: +InstallmentId || null,
-      name: InstallmentName,
-    };
-
-    try {
-      setLoading(true);
-      await axios.post(`${DOMAIN}/api/withdrawals`, payload);
-      toast.success("تمت العملية بنجاح!");
-      router.replace("/admin/installments");
-    } catch (error: any) {
-      console.log(error);
-      const message =
-        error?.response?.data?.message || "حدث خطأ أثناء عملية السحب";
-      toast.error(message);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload = {
+        productId: selectedProduct?.id || null,
+        quantity: quantity || 1,
+        description,
+        price: +price,
+        installmentId: +InstallmentId || null,
+        name: InstallmentName,
+      };
+  
+      try {
+        setLoading(true);
+        await axios.post(`${DOMAIN}/api/withdrawals`, payload);
+        toast.success("تمت العملية بنجاح!");
+        router.replace("/admin/installments");
+      } catch (error: any) {
+        console.log(error);
+        const message =
+          error?.response?.data?.message || "حدث خطأ أثناء عملية السحب";
+        toast.error(message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

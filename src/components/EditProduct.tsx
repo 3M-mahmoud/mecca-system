@@ -54,18 +54,19 @@ const EditProduct = () => {
 
   const onSubmit: SubmitHandler<ProductFormData> = async (data) => {
     if (!productId) return;
-
-    try {
-      setLoading(true);
-      await axios.put(`${DOMAIN}/api/products/${productId}`, data);
-      toast.success("تم تحديث المنتج بنجاح!");
-      router.replace("/admin");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
-      console.error(error);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      try {
+        setLoading(true);
+        await axios.put(`${DOMAIN}/api/products/${productId}`, data);
+        toast.success("تم تحديث المنتج بنجاح!");
+        router.replace("/admin");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

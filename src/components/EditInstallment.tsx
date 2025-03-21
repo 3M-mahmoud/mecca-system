@@ -55,18 +55,19 @@ const EditInstallment = () => {
 
   const onSubmit: SubmitHandler<InstallmentFormData> = async (data) => {
     if (!InstallmentId) return;
-
-    try {
-      setLoading(true);
-      await axios.put(`${DOMAIN}/api/installments/${InstallmentId}`, data);
-      toast.success("تم تحديث عميل الاقساط بنجاح!");
-      router.replace("/admin/installments");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
-      console.error(error);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      try {
+        setLoading(true);
+        await axios.put(`${DOMAIN}/api/installments/${InstallmentId}`, data);
+        toast.success("تم تحديث عميل الاقساط بنجاح!");
+        router.replace("/admin/installments");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

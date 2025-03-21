@@ -51,31 +51,33 @@ export default function ProductWithdrawal() {
 
   // دالة إرسال البيانات للـ API
   const handleWithdraw = async () => {
-    const customer = customers.find(
-      (customer) => customer.id === selectedCustomer
-    );
-    const payload = {
-      productId: +id,
-      [TraderType]: selectedCustomer,
-      quantity,
-      description: text,
-      price: +price,
-      name: customer?.name || name,
-    };
-    try {
-      setLoading(true);
-      console.log(payload);
-      await axios.post(`${DOMAIN}/api/withdrawals`, payload);
-      toast.success("تم سحب المنتج بنجاح!");
-      router.replace("/admin");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message || "حدث خطأ أثناء عملية السحب"
+    if(!loading) {
+      const customer = customers.find(
+        (customer) => customer.id === selectedCustomer
       );
-      console.error(error);
-    } finally {
-      setLoading(false);
+      const payload = {
+        productId: +id,
+        [TraderType]: selectedCustomer,
+        quantity,
+        description: text,
+        price: +price,
+        name: customer?.name || name,
+      };
+      try {
+        setLoading(true);
+        console.log(payload);
+        await axios.post(`${DOMAIN}/api/withdrawals`, payload);
+        toast.success("تم سحب المنتج بنجاح!");
+        router.replace("/admin");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data?.message || "حدث خطأ أثناء عملية السحب"
+        );
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

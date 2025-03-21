@@ -42,30 +42,32 @@ export default function EditProductSupply() {
 
   // دالة إرسال البيانات للـ API
   const handleWithdraw = async () => {
-    const customer = customers.find(
-      (customer) => customer.id === selectedCustomer
-    );
-    const data: UpdatedWithdrawalsDto = {
-      productId: +id,
-      quantity,
-      description: text,
-      price: +price,
-      name: customer?.name || name,
-      traderId: selectedCustomer || null,
-    };
-    try {
-      setLoading(true);
-      await axios.put(`${DOMAIN}/api/supplies/${supplyId}`, data);
-      toast.success("تم تعديل عملية وارد المنتج بنجاح!");
-      router.replace(`/admin`);
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية الوارد"
+    if(!loading) {
+      const customer = customers.find(
+        (customer) => customer.id === selectedCustomer
       );
-      console.error(error);
-    } finally {
-      setLoading(false);
+      const data: UpdatedWithdrawalsDto = {
+        productId: +id,
+        quantity,
+        description: text,
+        price: +price,
+        name: customer?.name || name,
+        traderId: selectedCustomer || null,
+      };
+      try {
+        setLoading(true);
+        await axios.put(`${DOMAIN}/api/supplies/${supplyId}`, data);
+        toast.success("تم تعديل عملية وارد المنتج بنجاح!");
+        router.replace(`/admin`);
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية الوارد"
+        );
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

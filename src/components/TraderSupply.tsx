@@ -35,25 +35,27 @@ export default function TraderSupply() {
   };
 
   const handleWithdraw = async () => {
-    const payload = {
-      productId: selectedProduct?.id || null,
-      quantity: quantity || 1,
-      description,
-      price: +price,
-      traderId: +traderId || null,
-      name: traderName,
-    };
-
-    try {
-      setLoading(true);
-      await axios.post(`${DOMAIN}/api/supplies`, payload);
-      toast.success("تمت العملية بنجاح!");
-      router.replace("/admin/traders");
-    } catch (error) {
-      console.log(error);
-      toast.error("حدث خطأ أثناء العملية");
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload = {
+        productId: selectedProduct?.id || null,
+        quantity: quantity || 1,
+        description,
+        price: +price,
+        traderId: +traderId || null,
+        name: traderName,
+      };
+  
+      try {
+        setLoading(true);
+        await axios.post(`${DOMAIN}/api/supplies`, payload);
+        toast.success("تمت العملية بنجاح!");
+        router.replace("/admin/traders");
+      } catch (error) {
+        console.log(error);
+        toast.error("حدث خطأ أثناء العملية");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

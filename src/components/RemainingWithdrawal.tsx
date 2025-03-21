@@ -36,27 +36,29 @@ export default function RemainingWithdrawal() {
   };
 
   const handleWithdraw = async () => {
-    const payload = {
-      productId: selectedProduct?.id || null,
-      quantity: quantity || 1,
-      description,
-      price: +price,
-      remainingId: +remainingId || null,
-      name: remainingName,
-    };
-
-    try {
-      setLoading(true);
-      await axios.post(`${DOMAIN}/api/withdrawals`, payload);
-      toast.success("تمت العملية بنجاح!");
-      router.replace("/admin/remaining");
-    } catch (error: any) {
-      console.log(error);
-      const message =
-        error?.response?.data?.message || "حدث خطأ أثناء عملية السحب";
-      toast.error(message);
-    } finally {
-      setLoading(false);
+    if(!loading) {
+      const payload = {
+        productId: selectedProduct?.id || null,
+        quantity: quantity || 1,
+        description,
+        price: +price,
+        remainingId: +remainingId || null,
+        name: remainingName,
+      };
+  
+      try {
+        setLoading(true);
+        await axios.post(`${DOMAIN}/api/withdrawals`, payload);
+        toast.success("تمت العملية بنجاح!");
+        router.replace("/admin/remaining");
+      } catch (error: any) {
+        console.log(error);
+        const message =
+          error?.response?.data?.message || "حدث خطأ أثناء عملية السحب";
+        toast.error(message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

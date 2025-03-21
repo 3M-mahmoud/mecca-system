@@ -30,24 +30,26 @@ const Page = () => {
     resolver: zodResolver(addTraderSchema),
   });
   const onSubmit: SubmitHandler<TraderFormData> = async (data) => {
-    if (!data.phone) {
-      data = {
-        name: data.name,
-        balance: data.balance,
-      };
-    }
-    try {
-      setLoading(true);
-       await axios.post(`${DOMAIN}/api/traders`, data);
-      toast.success("تم إضافة التاجر");
-      router.replace("/admin/traders");
-      setLoading(false);
-      router.refresh();
-    } catch (error: any) {
-      const message = error?.response?.data.message;
-      if (message) toast.error(message);
-      setLoading(false);
-      console.log(error);
+    if(!loading) {
+      if (!data.phone) {
+        data = {
+          name: data.name,
+          balance: data.balance,
+        };
+      }
+      try {
+        setLoading(true);
+         await axios.post(`${DOMAIN}/api/traders`, data);
+        toast.success("تم إضافة التاجر");
+        router.replace("/admin/traders");
+        setLoading(false);
+        router.refresh();
+      } catch (error: any) {
+        const message = error?.response?.data.message;
+        if (message) toast.error(message);
+        setLoading(false);
+        console.log(error);
+      }
     }
   };
   return (

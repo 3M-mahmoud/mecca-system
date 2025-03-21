@@ -19,30 +19,32 @@ export default function Payment({ typePayment, typeCustomer }: props) {
   const remainingId = searchParams.get("remainingId") || "";
 
   const handlePayment = async () => {
-    const payload = {
-      amount: +price,
-      traderId: +traderId || null,
-      remainingId: +remainingId || null,
-    };
-
-    try {
-      setLoading(true);
-      if (typePayment === "add") {
-        await axios.post(`${DOMAIN}/api/payments`, payload);
-      } else {
-        await axios.put(`${DOMAIN}/api/payments/${id}`, payload);
+    if(!loading) {
+      const payload = {
+        amount: +price,
+        traderId: +traderId || null,
+        remainingId: +remainingId || null,
+      };
+  
+      try {
+        setLoading(true);
+        if (typePayment === "add") {
+          await axios.post(`${DOMAIN}/api/payments`, payload);
+        } else {
+          await axios.put(`${DOMAIN}/api/payments/${id}`, payload);
+        }
+        toast.success("تمت العملية الدفع بنجاح!");
+        if (typeCustomer === "traders") {
+          router.replace("/admin/traders");
+        } else {
+          router.replace("/admin/remaining");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("حدث خطأ أثناء العملية");
+      } finally {
+        setLoading(false);
       }
-      toast.success("تمت العملية الدفع بنجاح!");
-      if (typeCustomer === "traders") {
-        router.replace("/admin/traders");
-      } else {
-        router.replace("/admin/remaining");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("حدث خطأ أثناء العملية");
-    } finally {
-      setLoading(false);
     }
   };
 

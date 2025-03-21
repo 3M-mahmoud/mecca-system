@@ -32,7 +32,7 @@ const Page = () => {
     formState: { errors, isSubmitting },
   } = useForm<TraderFormData>({
     mode: "onChange",
-    resolver: zodResolver(editTraderSchema)
+    resolver: zodResolver(editTraderSchema),
   });
 
   useEffect(() => {
@@ -50,18 +50,19 @@ const Page = () => {
 
   const onSubmit: SubmitHandler<TraderFormData> = async (data) => {
     if (!traderId) return;
-
-    try {
-      setLoading(true);
-      await axios.put(`${DOMAIN}/api/traders/${traderId}`, data);
-      toast.success("تم تحديث التاجر بنجاح!");
-      router.replace("/admin/traders");
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
-      console.error(error);
-    } finally {
-      setLoading(false);
+    if (!loading) {
+      try {
+        setLoading(true);
+        await axios.put(`${DOMAIN}/api/traders/${traderId}`, data);
+        toast.success("تم تحديث التاجر بنجاح!");
+        router.replace("/admin/traders");
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "حدث خطأ أثناء التحديث");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

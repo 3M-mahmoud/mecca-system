@@ -33,21 +33,23 @@ const AddProductForm = () => {
   });
 
   const onSubmit: SubmitHandler<ProductFormData> = async (data) => {
-    try {
-      setLoading(true);
-      await axios.post(`${DOMAIN}/api/products`, data); // Removed unused `response`
-      toast.success("تم إضافة المنتج");
-      router.replace("/admin");
-      router.refresh();
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        const message = error.response?.data.message;
-        if (message) toast.error(message);
-      } else {
-        console.error("An unexpected error occurred:", error);
+    if(!loading) {
+      try {
+        setLoading(true);
+        await axios.post(`${DOMAIN}/api/products`, data); // Removed unused `response`
+        toast.success("تم إضافة المنتج");
+        router.replace("/admin");
+        router.refresh();
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          const message = error.response?.data.message;
+          if (message) toast.error(message);
+        } else {
+          console.error("An unexpected error occurred:", error);
+        }
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -48,33 +48,35 @@ export default function EditProductWithdrawal() {
 
   // دالة إرسال البيانات للـ API
   const handleWithdraw = async () => {
-    const customer = customers.find(
-      (customer) => customer.id === selectedCustomer
-    );
-    const data: UpdatedWithdrawalsDto = {
-      productId: +id,
-      quantity,
-      description: text,
-      price: +price,
-      name: customer?.name || name,
-      traderId: customerType === "commercial" ? selectedCustomer : null,
-      remainingId: customerType === "wholesale" ? selectedCustomer : null,
-    };
-    try {
-      setLoading(true);
-      console.log(data);
-      console.log(withdrawalId);
-      await axios.put(`${DOMAIN}/api/withdrawals/${withdrawalId}`, data);
-      toast.success("تم تعديل عملية سحب المنتج بنجاح!");
-      router.replace(`/admin`);
-      router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية السحب"
+    if(!loading) {
+      const customer = customers.find(
+        (customer) => customer.id === selectedCustomer
       );
-      console.error(error);
-    } finally {
-      setLoading(false);
+      const data: UpdatedWithdrawalsDto = {
+        productId: +id,
+        quantity,
+        description: text,
+        price: +price,
+        name: customer?.name || name,
+        traderId: customerType === "commercial" ? selectedCustomer : null,
+        remainingId: customerType === "wholesale" ? selectedCustomer : null,
+      };
+      try {
+        setLoading(true);
+        console.log(data);
+        console.log(withdrawalId);
+        await axios.put(`${DOMAIN}/api/withdrawals/${withdrawalId}`, data);
+        toast.success("تم تعديل عملية سحب المنتج بنجاح!");
+        router.replace(`/admin`);
+        router.refresh(); // تحديث البيانات بدون إعادة تحميل الصفحة
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data?.message || "حدث خطأ أثناء تعديل عملية السحب"
+        );
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
