@@ -11,11 +11,7 @@ export default function RootLayout({
       <div className="flex min-h-screen">
         <SideBar />
         <div className="content w-full overflow-hidden">
-          <h3>
-            <Suspense fallback={<div>جارِ التحميل...</div>}>
-              {children}
-            </Suspense>
-          </h3>
+          <h3>{children}</h3>
         </div>
       </div>
     </div>
