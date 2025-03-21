@@ -11,7 +11,7 @@ import style from "../../loader.module.css";
 
 // تعريف المخطط باستخدام Zod
 const addRemainingSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, "يجب إدخال اسم عميل البوااقي"),
   balance: z.number(),
   phone: z.string().optional(),
 });

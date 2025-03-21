@@ -12,7 +12,7 @@ import style from "../app/loader.module.css";
 // تعريف المخطط باستخدام Zod
 const editInstallmentSchema = z.object({
   name: z.string().min(1, "يجب إدخال اسم عميل الاقساط"),
-  balance: z.number().min(1, "يجب إدخال رصيد عميل الاقساط"),
+  balance: z.number(),
   phone: z.string().optional(),
 });
 

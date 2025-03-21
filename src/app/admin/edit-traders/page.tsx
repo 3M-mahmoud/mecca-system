@@ -12,7 +12,7 @@ import style from "../../loader.module.css";
 // تعريف المخطط باستخدام Zod
 const editTraderSchema = z.object({
   name: z.string().min(1, "يجب إدخال اسم التاجر"),
-  balance: z.number().min(1, "يجب إدخال رصيد التاجر"),
+  balance: z.number(),
   phone: z.string().optional(),
 });
 

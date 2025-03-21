@@ -14,7 +14,7 @@ const editProductSchema = z.object({
   name: z.string().min(1, "يجب إدخال اسم المنتج"),
   price: z.number().min(1, "يجب إدخال سعر صالح"),
   category: z.string().min(1, "يجب إدخال الفئة"),
-  quantity: z.number().min(1, "يجب إدخال الكمية"),
+  quantity: z.number(),
 });
 
 // استنتاج النوع من Zod schema
