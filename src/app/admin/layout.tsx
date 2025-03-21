@@ -1,5 +1,4 @@
 import SideBar from "@/components/SideBar";
-import { Suspense } from "react";
 
 export default function RootLayout({
   children,

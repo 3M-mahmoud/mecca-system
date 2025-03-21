@@ -1,8 +1,13 @@
 import Payment from "@/components/Payment";
-import React from "react";
+import React, { Suspense } from "react";
+import style from "../../../loader.module.css";
 
 const Page = () => {
-  return <Payment typePayment="edit" typeCustomer="remaining" />;
+  return (
+    <Suspense fallback={<div className={style.loader}></div>}>
+      <Payment typePayment="edit" typeCustomer="remaining" />
+    </Suspense>
+  );
 };
 
 export default Page;
