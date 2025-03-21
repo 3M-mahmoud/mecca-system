@@ -130,7 +130,7 @@ const Page = () => {
                 >
                   {remaining.name}
                 </td>
-                <td className="px-4 py-2 font-bold">${remaining.balance}</td>
+                <td className="px-4 py-2 font-bold">${remaining.balance.toLocaleString("en-US")}</td>
                 <td className="px-10 py-2 text-nowrap">
                   {formatDate(remaining.updatedAt)}
                 </td>

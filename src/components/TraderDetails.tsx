@@ -166,7 +166,7 @@ export default function TraderDetails({ id, typeUser }: props) {
       {trader && (
         <>
           <h1 className="text-2xl font-bold">{trader.name}</h1>
-          <p className="text-gray-600">الرصيد: {trader.balance}</p>
+          <p className="text-gray-600">الرصيد: {trader.balance.toLocaleString("en-US")}</p>
           <div className="flex mt-4 gap-4 flex-col sm:flex-row">
             <button
               onClick={() => setActiveTab("withdrawals")}
@@ -202,11 +202,11 @@ export default function TraderDetails({ id, typeUser }: props) {
           <div className="flex items-center justify-between flex-col md:flex-row">
             <div className="mt-4 font-bold text-lg">
               إجمالي الكمية:{" "}
-              {activeTab === "payments" ? totalPayments : totalQuantity}
+              {activeTab === "payments" ? totalPayments.toLocaleString("en-US") : totalQuantity.toLocaleString("en-US")}
             </div>
             {activeTab !== "payments" ? (
               <div className="mt-4 font-bold text-lg">
-                إجمالي الفلوس: {totalPrice}
+                إجمالي الفلوس: {totalPrice.toLocaleString("en-US")}
               </div>
             ) : null}
           </div>

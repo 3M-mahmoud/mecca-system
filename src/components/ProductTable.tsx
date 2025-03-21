@@ -115,19 +115,19 @@ const ProductsTable = () => {
       {filteredProducts.length > 0 ? (
         <>
           <div className="mb-4 flex items-center justify-between flex-col space-y-2 sm:flex-row">
-            <span className="bg-green-600 p-2 text-white rounded-full">
+            <span className="bg-green-600 p-2 text-white rounded-full w-full sm:w-fit text-center">
               عدد الاجهزة ={" "}
-              <span className="font-bold text-lg">{totalProduct}</span>
+              <span className="font-bold text-lg">{totalProduct.toLocaleString("en-US")}</span>
             </span>
-            <span className="bg-[#009688] p-2 text-white rounded-full">
+            <span className="bg-[#009688] p-2 text-white rounded-full w-full sm:w-fit text-center">
               عدد الاصناف ={" "}
               <span className="font-bold text-lg">
                 {filteredProducts.length}
               </span>
             </span>
-            <span className="bg-[#9C27B0] p-2 text-white rounded-full">
+            <span className="bg-[#9C27B0] p-2 text-white rounded-full w-full sm:w-fit text-center">
               اجمالي المخزن ={" "}
-              <span className="font-bold text-lg">{totalPrice}</span>
+              <span className="font-bold text-lg">{totalPrice.toLocaleString("en-US")}</span>
             </span>
           </div>
           <Table filteredProducts={filteredProducts} typeTable="user" />

@@ -176,7 +176,7 @@ export default function InstallmentDetails({ id, typeUser }: props) {
       {installment && (
         <>
           <h1 className="text-2xl font-bold">{installment.name}</h1>
-          <p className="text-gray-600">الرصيد: {installment.balance}</p>
+          <p className="text-gray-600">الرصيد: {installment.balance.toLocaleString("en-US")}</p>
           <div className="flex mt-4 gap-4 flex-col sm:flex-row">
             <button
               onClick={() => setActiveTab("instalment")}
@@ -203,11 +203,11 @@ export default function InstallmentDetails({ id, typeUser }: props) {
           <div className="flex items-center justify-between flex-col md:flex-row">
             <div className="mt-4 font-bold text-lg">
               إجمالي الكمية:{" "}
-              {activeTab === "instalment" ? totalPayments : totalQuantity}
+              {activeTab === "instalment" ? totalPayments.toLocaleString("en-US") : totalQuantity.toLocaleString("en-US")}
             </div>
             {activeTab !== "instalment" ? (
               <div className="mt-4 font-bold text-lg">
-                إجمالي الفلوس: {totalPrice}
+                إجمالي الفلوس: {totalPrice.toLocaleString("en-US")}
               </div>
             ) : null}
           </div>

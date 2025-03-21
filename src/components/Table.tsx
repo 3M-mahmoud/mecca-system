@@ -108,10 +108,10 @@ const Table: React.FC<TableProps> = ({ filteredProducts, typeTable }) => {
               >
                 {product.name}
               </td>
-              <td className="px-4 py-2">${product.price.toFixed(2)}</td>
+              <td className="px-4 py-2">${product.price.toLocaleString("en-US")}</td>
               <td className="px-10 py-2">{product.count}</td>
               <td className="px-10 py-2">
-                ${(product.price * product.count).toFixed(2)}
+                ${(product.price * product.count).toLocaleString("en-US")}
               </td>
               <td className="px-4 py-2 text-nowrap">{product.category}</td>
               {typeTable === "admin" && (

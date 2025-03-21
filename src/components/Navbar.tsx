@@ -30,25 +30,42 @@ const Navbar = ({ children, payload }: any) => {
         onClick={toggleNav}
         className="text-[#0084dd] focus:outline-none sm:hidden"
       >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h16m-7 6h7"
-          ></path>
-        </svg>
+        {!isNavOpen ? (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        ) : (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        )}
       </button>
       <nav
         className={`${
           isNavOpen ? "block" : "hidden"
-        } sm:flex sm:space-x-6 absolute sm:static top-[105] left-0 w-full sm:w-auto bg-white sm:bg-transparent shadow-lg sm:shadow-none py-4 sm:py-0`}
+        } sm:flex sm:space-x-6 absolute sm:static top-[105px] left-0 w-full sm:w-auto bg-white sm:bg-transparent shadow-lg sm:shadow-none py-4 sm:py-0`}
       >
         <Link
           href="/traders"

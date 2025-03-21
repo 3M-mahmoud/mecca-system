@@ -166,11 +166,11 @@ export default function RemainingDetails({ id, typeUser }: props) {
           <div className="flex items-center justify-between flex-col md:flex-row">
             <div className="mt-4 font-bold text-lg">
               إجمالي الكمية:{" "}
-              {activeTab === "payments" ? totalPayments : totalQuantity}
+              {activeTab === "payments" ? totalPayments.toLocaleString("en-US") : totalQuantity.toLocaleString("en-US")}
             </div>
             {activeTab !== "payments" ? (
               <div className="mt-4 font-bold text-lg">
-                إجمالي الفلوس: {totalPrice}
+                إجمالي الفلوس: {totalPrice.toLocaleString("en-US")}
               </div>
             ) : null}
           </div>

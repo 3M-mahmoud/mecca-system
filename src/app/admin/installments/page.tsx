@@ -133,7 +133,7 @@ const Page = () => {
                 >
                   {installment.name}
                 </td>
-                <td className="px-4 py-2 font-bold">${installment.balance}</td>
+                <td className="px-4 py-2 font-bold">${installment.balance.toLocaleString("en-US")}</td>
                 <td className="px-10 py-2 text-nowrap">
                   {formatDate(installment.updatedAt)}
                 </td>
