@@ -90,6 +90,13 @@ const Navbar = ({ children, payload }: any) => {
         </Link>
         <Link
           onClick={toggleNav}
+          href="/withdrawals"
+          className="block lg:inline-block text-[#0084dd] hover:text-[#006bb3] px-4 py-2"
+        >
+          المسحوبات
+        </Link>
+        <Link
+          onClick={toggleNav}
           href={payload ? "/admin" : "/login"}
           className="block lg:inline-block text-[#0084dd] hover:text-[#006bb3] px-4 py-2"
         >

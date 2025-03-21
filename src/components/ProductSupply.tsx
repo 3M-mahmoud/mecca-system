@@ -13,6 +13,7 @@ export default function ProductSupply() {
   const router = useRouter();
   const description = searchParams.get("description") || "";
   const productPrice = searchParams.get("price") || "";
+  const productCategory = searchParams.get("category") || "";
   const id = searchParams.get("id") || "";
 
   const [customerType, setCustomerType] = useState<string | null>(null);
@@ -44,7 +45,7 @@ export default function ProductSupply() {
 
   // دالة إرسال البيانات للـ API
   const handleWithdraw = async () => {
-    if(!loading) {
+    if (!loading) {
       const customer = customers.find(
         (customer) => customer.id === selectedCustomer
       );
@@ -58,7 +59,7 @@ export default function ProductSupply() {
       };
       try {
         setLoading(true);
-  
+
         await axios.post(`${DOMAIN}/api/supplies`, payload);
         toast.success("تم وارد المنتج بنجاح!");
         router.replace("/admin");
@@ -99,7 +100,7 @@ export default function ProductSupply() {
             }`}
             onClick={() => {
               setCustomerType("normal");
-              setName("شركة فريش");
+              setName(`شركة ${productCategory}`);
             }}
           >
             شركة المنتج

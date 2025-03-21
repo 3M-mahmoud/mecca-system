@@ -62,7 +62,7 @@ const Table: React.FC<TableProps> = ({ filteredProducts, typeTable }) => {
   };
   const handleSupply = (product: Product) => {
     router.push(
-      `admin/product-supply?id=${product.id}&description=${product.name}&price=${product.price}`
+      `admin/product-supply?id=${product.id}&description=${product.name}&price=${product.price}&category=${product.category}`
     );
   };
 
