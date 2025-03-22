@@ -38,7 +38,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <AiOutlineProduct />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               المنتجات
             </span>
           </Link>
@@ -52,7 +52,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <TbBrandProducthunt />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               أضافة منتج
             </span>
           </Link>
@@ -66,7 +66,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <PiTrademarkRegistered />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               التجار
             </span>
           </Link>
@@ -80,7 +80,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <IoPersonAddOutline />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               إضافة تاجر
             </span>
           </Link>
@@ -94,7 +94,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <PiTrademarkRegistered />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               البواقي
             </span>
           </Link>
@@ -108,7 +108,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <IoPersonAddOutline />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               إضافة عميل بواقي
             </span>
           </Link>
@@ -122,7 +122,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <PiTrademarkRegistered />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               الاقساط
             </span>
           </Link>
@@ -136,7 +136,7 @@ const SideBar = () => {
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
             <IoPersonAddOutline />
-            <span className="text-sm font-medium mr-2 hidden md:block text-nowrap">
+            <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               إضافة عميل إقساط
             </span>
           </Link>

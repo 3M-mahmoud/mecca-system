@@ -117,7 +117,7 @@ export default function MerchantsList() {
                 الرصيد:
                 <span className="font-medium mr-1">
                   <span className="font-bold text-nowrap text-lg">
-                    {trader.balance < 0 ? trader.balance * -1 : trader.balance}
+                    {trader.balance < 0 ? (trader.balance * -1).toLocaleString("en-US") : trader.balance.toLocaleString("en-US")}
                   </span>{" "}
                   جنيه
                 </span>

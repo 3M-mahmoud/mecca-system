@@ -118,8 +118,8 @@ export default function MerchantsList() {
                 <span className="font-medium mr-1">
                   <span className="font-bold text-nowrap text-lg">
                     {remaining.balance < 0
-                      ? remaining.balance * -1
-                      : remaining.balance}
+                      ? (remaining.balance * -1).toLocaleString("en-US")
+                      : remaining.balance.toLocaleString("en-US")}
                   </span>{" "}
                   جنيه
                 </span>
