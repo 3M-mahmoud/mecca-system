@@ -129,12 +129,12 @@ const Page = () => {
                 <td className="px-10 py-2">{index + 1}</td>
                 <td
                   onClick={() => router.push(`/admin/traders/${trader.id}`)}
-                  className="px-10 py-2 text-nowrap"
+                  className="px-10 py-2 whitespace-nowrap"
                 >
                   {trader.name}
                 </td>
                 <td className="px-4 py-2 font-bold">${trader.balance.toLocaleString("en-US")}</td>
-                <td className="px-10 py-2 text-nowrap">
+                <td className="px-10 py-2 whitespace-nowrap">
                   {formatDate(trader.updatedAt)}
                 </td>
                 <td className="px-10 py-2">

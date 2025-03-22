@@ -95,7 +95,7 @@ const Table: React.FC<TableProps> = ({ filteredProducts, typeTable }) => {
             >
               <td className="px-10 py-2">{index + 1}</td>
               <td
-                className="px-10 py-2 text-nowrap"
+                className="px-10 py-2 whitespace-nowrap"
                 onClick={() =>
                   router.push(
                     `${
@@ -113,7 +113,7 @@ const Table: React.FC<TableProps> = ({ filteredProducts, typeTable }) => {
               <td className="px-10 py-2">
                 ${(product.price * product.count).toLocaleString("en-US")}
               </td>
-              <td className="px-4 py-2 text-nowrap">{product.category}</td>
+              <td className="px-4 py-2 whitespace-nowrap">{product.category}</td>
               {typeTable === "admin" && (
                 <>
                   <td className="px-10 py-2">

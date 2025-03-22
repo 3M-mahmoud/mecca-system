@@ -126,12 +126,12 @@ const Page = () => {
                   onClick={() =>
                     router.push(`/admin/remaining/${remaining.id}`)
                   }
-                  className="px-10 py-2 text-nowrap"
+                  className="px-10 py-2 whitespace-nowrap"
                 >
                   {remaining.name}
                 </td>
                 <td className="px-4 py-2 font-bold">${remaining.balance.toLocaleString("en-US")}</td>
-                <td className="px-10 py-2 text-nowrap">
+                <td className="px-10 py-2 whitespace-nowrap">
                   {formatDate(remaining.updatedAt)}
                 </td>
                 <td className="px-10 py-2">
