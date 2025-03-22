@@ -40,21 +40,9 @@ export default function Page() {
       }) || [];
     setFilteredData(filtered);
   }, [filters, withdrawals]);
-
-  const totalQuantity = filteredData.reduce((sum, item) => {
-    let total = 0;
-    if (item.productId) {
-      total = sum + item.quantity;
-    }
-    return total;
-  }, 0);
-  const totalProductPrice = filteredData.reduce((sum, item) => {
-    let total = 0;
-    if (item.productId) {
-      total = sum + item.quantity * item.price;
-    }
-    return total;
-  }, 0);
+  const products = filteredData.filter((item) => item.productId !== null);
+  const totalQuantity = products.reduce((sum, item) => sum + item.quantity, 0);
+  const totalProductPrice = products.reduce((sum, item) => sum + item.quantity * item.price, 0);
   const totalPrice = filteredData.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
@@ -139,7 +127,9 @@ export default function Page() {
             ))}
           </div>
         </>
-      ) : <p className="text-gray-500 text-center">لا يوجد نتائج</p>}
+      ) : (
+        <p className="text-gray-500 text-center">لا يوجد نتائج</p>
+      )}
     </div>
   );
 }

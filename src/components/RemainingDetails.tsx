@@ -122,13 +122,9 @@ export default function RemainingDetails({ id, typeUser }: props) {
     }
   }, [filters, activeTab, remaining]);
 
-  const totalQuantity = filteredData.reduce((sum, item) => {
-    let total = 0;
-    if (item.productId) {
-      total = sum + item.quantity;
-    }
-    return total;
-  }, 0);
+  const products = filteredData.filter((item) => item.productId !== null);
+  const totalQuantity = products.reduce((sum, item) => sum + item.quantity, 0);
+  const totalProductPrice = products.reduce((sum, item) => sum + item.quantity * item.price, 0);
   const totalPrice = filteredData.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
@@ -165,9 +161,14 @@ export default function RemainingDetails({ id, typeUser }: props) {
 
           <div className="flex items-center justify-between flex-col md:flex-row">
             <div className="mt-4 font-bold text-lg">
-              إجمالي الكمية:{" "}
+              إجمالي {activeTab === "payments" ? "الفلوس" : "الكمية"}:{" "}
               {activeTab === "payments" ? totalPayments.toLocaleString("en-US") : totalQuantity.toLocaleString("en-US")}
             </div>
+            {activeTab !== "payments" ? (
+              <div className="mt-4 font-bold text-lg">
+              إجمالي فلوس الاجهزة: {totalProductPrice.toLocaleString("en-US")}
+            </div>
+            ) : null}
             {activeTab !== "payments" ? (
               <div className="mt-4 font-bold text-lg">
                 إجمالي الفلوس: {totalPrice.toLocaleString("en-US")}
