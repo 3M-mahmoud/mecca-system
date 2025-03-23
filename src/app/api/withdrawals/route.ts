@@ -13,7 +13,11 @@ import { Withdrawal } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   try {
-    const withdrawals = await prisma.withdrawal.findMany();
+    const withdrawals = await prisma.withdrawal.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
     return NextResponse.json(withdrawals, { status: 200 });
   } catch (error) {
     console.log(error);

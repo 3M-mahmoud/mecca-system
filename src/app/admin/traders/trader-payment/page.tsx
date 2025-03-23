@@ -4,7 +4,7 @@ import style from "../../../loader.module.css";
 const Page = () => {
   return (
     <Suspense fallback={<div className={style.loader}></div>}>
-      <Payment typePayment="add" typeCustomer="remaining" />
+      <Payment typePayment="add" typeCustomer="traders" />
     </Suspense>
   );
 };

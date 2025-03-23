@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { DOMAIN } from "@/utils/constants";
 import { Payments, Supplies, TraderResponse, Withdrawal } from "@/utils/types";
-import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
+import { GoLinkExternal } from "react-icons/go";
 
 type props = {
   id: string;
@@ -151,7 +152,10 @@ export default function TraderDetails({ id, typeUser }: props) {
   }, [filters, activeTab, trader]);
   const products = filteredData.filter((item) => item.productId !== null);
   const totalQuantity = products.reduce((sum, item) => sum + item.quantity, 0);
-  const totalProductPrice = products.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const totalProductPrice = products.reduce(
+    (sum, item) => sum + item.quantity * item.price,
+    0
+  );
   const totalPrice = filteredData.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
@@ -159,10 +163,12 @@ export default function TraderDetails({ id, typeUser }: props) {
   const totalPayments = payments.reduce((sum, item) => sum + item.amount, 0);
   return (
     <div className="p-4 max-w-4xl mx-auto">
-      {trader && (
+      {trader ? (
         <>
           <h1 className="text-2xl font-bold">{trader.name}</h1>
-          <p className="text-gray-600">الرصيد: {trader.balance.toLocaleString("en-US")}</p>
+          <p className="text-gray-600">
+            الرصيد: {trader.balance.toLocaleString("en-US")}
+          </p>
           <div className="flex mt-4 gap-4 flex-col sm:flex-row">
             <button
               onClick={() => setActiveTab("withdrawals")}
@@ -197,20 +203,21 @@ export default function TraderDetails({ id, typeUser }: props) {
           </div>
           <div className="flex items-center justify-between flex-col md:flex-row">
             <div className="mt-4 font-bold text-lg">
-            إجمالي {activeTab === "payments" ? "الفلوس" : "الكمية"}:{" "}
-              {activeTab === "payments" ? totalPayments.toLocaleString("en-US") : totalQuantity.toLocaleString("en-US")}
+              إجمالي {activeTab === "payments" ? "الفلوس" : "الكمية"}:{" "}
+              {activeTab === "payments"
+                ? totalPayments.toLocaleString("en-US")
+                : totalQuantity.toLocaleString("en-US")}
             </div>
             {activeTab !== "payments" ? (
               <div className="mt-4 font-bold text-lg">
-              إجمالي فلوس الاجهزة: {totalProductPrice.toLocaleString("en-US")}
-            </div>
+                إجمالي فلوس الاجهزة: {totalProductPrice.toLocaleString("en-US")}
+              </div>
             ) : null}
             {activeTab !== "payments" ? (
               <div className="mt-4 font-bold text-lg">
                 إجمالي الفلوس: {totalPrice.toLocaleString("en-US")}
               </div>
             ) : null}
-            
           </div>
           <div className="mt-4 flex gap-4 flex-col sm:flex-row">
             {activeTab !== "payments" ? (
@@ -263,11 +270,18 @@ export default function TraderDetails({ id, typeUser }: props) {
                     </div>
                   )}
 
-                  <h2
-                    className="text-lg font-semibold mt-4 sm:mt-0 cursor-pointer"
-                    onClick={() => router.push(`/product/${item.productId}`)}
-                  >
-                    {item.description}
+                  <h2 className="mt-4 sm:mt-0 flex items-center">
+                    <span className="text-lg font-semibold ml-2">
+                      {item.description}
+                    </span>
+                    {item.productId ? (
+                      <GoLinkExternal
+                        className="hover:text-blue-600 mt-1 cursor-pointer"
+                        onClick={() =>
+                          router.push(`/product/${item.productId}`)
+                        }
+                      />
+                    ) : null}
                   </h2>
                   <p className="text-gray-500">{item.name}</p>
                   <p className="text-gray-700 mt-2">
@@ -317,7 +331,7 @@ export default function TraderDetails({ id, typeUser }: props) {
               ))}
           </div>
         </>
-      )}
+      ) : <p className="text-gray-500 text-center">لا يوجد نتائج</p>}
     </div>
   );
 }

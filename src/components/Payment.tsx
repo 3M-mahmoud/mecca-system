@@ -19,13 +19,13 @@ export default function Payment({ typePayment, typeCustomer }: props) {
   const remainingId = searchParams.get("remainingId") || "";
 
   const handlePayment = async () => {
-    if(!loading) {
+    if (!loading) {
       const payload = {
         amount: +price,
         traderId: +traderId || null,
         remainingId: +remainingId || null,
       };
-  
+
       try {
         setLoading(true);
         if (typePayment === "add") {
@@ -36,7 +36,7 @@ export default function Payment({ typePayment, typeCustomer }: props) {
         toast.success("تمت العملية الدفع بنجاح!");
         if (typeCustomer === "traders") {
           router.replace("/admin/traders");
-        } else {
+        } else if (typeCustomer === "remaining") {
           router.replace("/admin/remaining");
         }
       } catch (error) {

@@ -3,13 +3,16 @@ import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { DOMAIN } from "@/utils/constants";
 import { Installments, Instalment, Withdrawal } from "@/utils/types";
-import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import style from "../app/loader.module.css";
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
+import { GoLinkExternal } from "react-icons/go";
+
+
 type props = {
   id: string;
   typeUser: string;
@@ -173,7 +176,7 @@ export default function InstallmentDetails({ id, typeUser }: props) {
   };
   return (
     <div className="p-4 max-w-4xl mx-auto">
-      {installment && (
+      {installment ? (
         <>
           <h1 className="text-2xl font-bold">{installment.name}</h1>
           <p className="text-gray-600">الرصيد: {installment.balance.toLocaleString("en-US")}</p>
@@ -294,12 +297,17 @@ export default function InstallmentDetails({ id, typeUser }: props) {
                       </span>
                     </div>
                   )}
-                  <h2
-                    className="text-lg font-semibold mt-4 sm:mt-0 cursor-pointer"
-                    onClick={() => router.push(`/product/${item.productId}`)}
-                  >
+                  <h2 className="mt-4 sm:mt-0 flex items-center">
+                  <span className="text-lg font-semibold ml-2">
                     {item.description}
-                  </h2>
+                  </span>
+                  {item.productId ? (
+                    <GoLinkExternal
+                      className="hover:text-blue-600 mt-1 cursor-pointer"
+                      onClick={() => router.push(`/product/${item.productId}`)}
+                    />
+                  ) : null}
+                </h2>
                   <p className="text-gray-500">{item.name}</p>
                   <p className="text-gray-700 mt-2">
                     التاريخ: {format(new Date(item.createdAt), "yyyy-MM-dd")}
@@ -356,7 +364,7 @@ export default function InstallmentDetails({ id, typeUser }: props) {
               ))}
           </div>
         </>
-      )}
+      ) : <p className="text-gray-500 text-center">لا يوجد نتائج</p>}
     </div>
   );
 }

@@ -2,12 +2,9 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { DOMAIN } from "@/utils/constants";
-import { Payments, RemainingResponse, Withdrawal } from "@/utils/types";
-import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineDelete } from "react-icons/md";
-import Swal from "sweetalert2";
+import { Withdrawal } from "@/utils/types";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { GoLinkExternal } from "react-icons/go";
 
 export default function Page() {
   const router = useRouter();
@@ -42,7 +39,10 @@ export default function Page() {
   }, [filters, withdrawals]);
   const products = filteredData.filter((item) => item.productId !== null);
   const totalQuantity = products.reduce((sum, item) => sum + item.quantity, 0);
-  const totalProductPrice = products.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const totalProductPrice = products.reduce(
+    (sum, item) => sum + item.quantity * item.price,
+    0
+  );
   const totalPrice = filteredData.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
@@ -86,30 +86,41 @@ export default function Page() {
                 key={item.id}
                 className="border rounded-lg p-4 shadow-md bg-white relative"
               >
-                <h2
-                  className="text-lg font-semibold mt-4 sm:mt-0 cursor-pointer"
-                  onClick={() => router.push(`/product/${item.productId}`)}
-                >
-                  {item.description}
+                <h2 className="mt-4 sm:mt-0 flex items-center">
+                  <span className="text-lg font-semibold ml-2">
+                    {item.description}
+                  </span>
+                  {item.productId ? (
+                    <GoLinkExternal
+                      className="hover:text-blue-600 mt-1 cursor-pointer"
+                      onClick={() => router.push(`/product/${item.productId}`)}
+                    />
+                  ) : null}
                 </h2>
-                <h2
-                  className="text-lg font-semibold mt-4 sm:mt-0 cursor-pointer"
-                  onClick={() =>
-                    router.push(
-                      `${
-                        "traderId" in item && item.traderId !== null
-                          ? `/traders/${item.traderId}`
-                          : "remainingId" in item && item.remainingId !== null
-                          ? `/remaining/${item.remainingId}`
-                          : "InstallmentId" in item &&
-                            item.InstallmentId !== null
-                          ? `/installments/${item.InstallmentId}`
-                          : "/withdrawals"
-                      }`
-                    )
-                  }
-                >
-                  {item.name}
+                <h2 className="mt-4 sm:mt-0 flex items-center">
+                  <span className="text-lg font-semibold ml-2">
+                    {item.name}
+                  </span>
+                  {item.traderId || item.remainingId || item.InstallmentId ? (
+                    <GoLinkExternal
+                      className="hover:text-blue-600 mt-1 cursor-pointer"
+                      onClick={() =>
+                        router.push(
+                          `${
+                            "traderId" in item && item.traderId !== null
+                              ? `/traders/${item.traderId}`
+                              : "remainingId" in item &&
+                                item.remainingId !== null
+                              ? `/remaining/${item.remainingId}`
+                              : "InstallmentId" in item &&
+                                item.InstallmentId !== null
+                              ? `/installments/${item.InstallmentId}`
+                              : "/withdrawals"
+                          }`
+                        )
+                      }
+                    />
+                  ) : null}
                 </h2>
                 <p className="text-gray-700 mt-2">
                   التاريخ: {format(new Date(item.createdAt), "yyyy-MM-dd")}

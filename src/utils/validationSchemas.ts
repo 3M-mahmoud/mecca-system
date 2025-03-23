@@ -19,10 +19,12 @@ export const createProductSchema = z.object({
     required_error: "سعر المنتج مطلوب",
     invalid_type_error: "السعر يكب ان يكون رقم",
   }),
-  quantity: z.number({
-    required_error: "الكمية مطلوبة",
-    invalid_type_error: "الكمية يجب ان تكون رقم",
-  }).min(0, {message: "يجب الكمية تكون قيمة موجبة"}),
+  quantity: z
+    .number({
+      required_error: "الكمية مطلوبة",
+      invalid_type_error: "الكمية يجب ان تكون رقم",
+    })
+    .min(0, { message: "يجب الكمية تكون قيمة موجبة" }),
 });
 
 // Register Schema
@@ -55,13 +57,10 @@ export const loginSchema = z.object({
       required_error: "الايميل مطلوب",
       invalid_type_error: "الايميل يجب ان يكون نص",
     })
-    .email(),
-  password: z
-    .string({
-      required_error: "الباسورد مطلوب",
-    })
-    .min(6, { message: "يجب الا يقل الباسورد عن 6 احرف" })
-    .max(25),
+    .email({ message: "الايميل غير صحيح" }),
+  password: z.string({
+    required_error: "الباسورد مطلوب",
+  }),
 });
 // update profile Schema
 export const updateProfileSchema = z.object({

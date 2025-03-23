@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
             <div className="max-w-md mx-auto">
               <div>
                 <h1 className="text-2xl font-semibold">
-                  Login Form Admin Page
+                  تسجيل الدخول لصفحة الأدمن
                 </h1>
               </div>
               <div className="divide-y divide-gray-200">

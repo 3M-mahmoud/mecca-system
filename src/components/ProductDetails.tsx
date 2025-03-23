@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { DOMAIN } from "@/utils/constants";
 import { ProductResponse, Supplies, Withdrawal } from "@/utils/types";
-import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
+import { GoLinkExternal } from "react-icons/go";
 type props = {
   id: string;
   typeUser: string;
@@ -217,24 +217,30 @@ export default function ProductDetails({ id, typeUser }: props) {
                   </div>
                 )}
 
-                <h2
-                  className="text-lg font-semibold mt-4 sm:mt-0 cursor-pointer"
-                  onClick={() =>
-                    router.push(
-                      `${
-                        "traderId" in item && item.traderId !== null
-                          ? `/traders/${item.traderId}`
-                          : "remainingId" in item && item.remainingId !== null
-                          ? `/remaining/${item.remainingId}`
-                          : "InstallmentId" in item &&
-                            item.InstallmentId !== null
-                          ? `/installments/${item.InstallmentId}`
-                          : "/"
-                      }`
-                    )
-                  }
-                >
-                  {item.name}
+                <h2 className="mt-4 sm:mt-0 flex items-center">
+                  <span className="text-lg font-semibold ml-2">
+                    {item.name}
+                  </span>
+                  {"traderId" in item && item.traderId || "remainingId" in item && item.remainingId || "InstallmentId" in item && item.InstallmentId ? (
+                    <GoLinkExternal
+                      className="hover:text-blue-600 mt-1 cursor-pointer"
+                      onClick={() =>
+                        router.push(
+                          `${
+                            "traderId" in item && item.traderId !== null
+                              ? `/traders/${item.traderId}`
+                              : "remainingId" in item &&
+                                item.remainingId !== null
+                              ? `/remaining/${item.remainingId}`
+                              : "InstallmentId" in item &&
+                                item.InstallmentId !== null
+                              ? `/installments/${item.InstallmentId}`
+                              : "/withdrawals"
+                          }`
+                        )
+                      }
+                    />
+                  ) : null}
                 </h2>
                 <p className="text-gray-500">{item.description}</p>
                 <p className="text-gray-700 mt-2">
