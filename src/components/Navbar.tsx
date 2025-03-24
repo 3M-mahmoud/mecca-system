@@ -28,7 +28,7 @@ const Navbar = ({ children, payload }: any) => {
       {/* زر Toggle لشاشات الموبايل */}
       <button
         onClick={toggleNav}
-        className="text-[#0084dd] focus:outline-none sm:hidden"
+        className="text-[#0084dd] focus:outline-none md:hidden"
       >
         {!isNavOpen ? (
           <svg
@@ -65,7 +65,7 @@ const Navbar = ({ children, payload }: any) => {
       <nav
         className={`${
           isNavOpen ? "block" : "hidden"
-        } sm:flex sm:space-x-6 absolute sm:static top-[105px] left-0 w-full sm:w-auto bg-white sm:bg-transparent shadow-lg sm:shadow-none py-4 sm:py-0`}
+        } md:flex md:space-x-6 absolute md:static top-[105px] left-0 w-full md:w-auto bg-white md:bg-transparent shadow-lg md:shadow-none py-4 md:py-0`}
       >
         <Link
           href="/traders"
@@ -94,6 +94,13 @@ const Navbar = ({ children, payload }: any) => {
           className="block lg:inline-block text-[#0084dd] hover:text-[#006bb3] px-4 py-2"
         >
           المسحوبات
+        </Link>
+        <Link
+          onClick={toggleNav}
+          href="/supplies"
+          className="block lg:inline-block text-[#0084dd] hover:text-[#006bb3] px-4 py-2"
+        >
+          الواردات
         </Link>
         <Link
           onClick={toggleNav}

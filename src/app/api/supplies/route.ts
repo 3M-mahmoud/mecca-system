@@ -16,6 +16,9 @@ export async function GET(request: NextRequest) {
     include: {
       TraderCustomer: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return NextResponse.json(supplies, { status: 200 });
 }

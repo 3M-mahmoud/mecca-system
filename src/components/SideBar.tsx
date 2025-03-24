@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // import icons
 import { AiOutlineProduct } from "react-icons/ai";
 import { TbBrandProducthunt } from "react-icons/tb";
-import { PiTrademarkRegistered } from "react-icons/pi";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { useEffect } from "react";
+import { CiFaceSmile } from "react-icons/ci";
+import { CiFaceMeh } from "react-icons/ci";
+import { CiFaceFrown } from "react-icons/ci";
 
 const SideBar = () => {
   const pathname = usePathname();
@@ -65,7 +66,7 @@ const SideBar = () => {
               linkItemActive === "3" ? "bg-[#f6f6f6]" : ""
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
-            <PiTrademarkRegistered />
+            <CiFaceSmile />
             <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               التجار
             </span>
@@ -93,7 +94,7 @@ const SideBar = () => {
               linkItemActive === "5" ? "bg-[#f6f6f6]" : ""
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
-            <PiTrademarkRegistered />
+            <CiFaceMeh />
             <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               البواقي
             </span>
@@ -121,7 +122,7 @@ const SideBar = () => {
               linkItemActive === "7" ? "bg-[#f6f6f6]" : ""
             } flex items-center text-sm text-black p-3 rounded-md hover:bg-[#f6f6f6]`}
           >
-            <PiTrademarkRegistered />
+            <CiFaceFrown />
             <span className="text-sm font-medium mr-2 hidden md:block whitespace-nowrap">
               الاقساط
             </span>
