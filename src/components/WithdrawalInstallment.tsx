@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import style from "../app/loader.module.css";
 import { Product } from "@/utils/types";
+import ProductList from "./ProductList";
 
 export default function WithdrawalInstallment() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function WithdrawalInstallment() {
   };
 
   const handleWithdraw = async () => {
-    if(!loading) {
+    if (!loading) {
       const payload = {
         productId: selectedProduct?.id || null,
         quantity: quantity || 1,
@@ -45,7 +46,7 @@ export default function WithdrawalInstallment() {
         installmentId: +InstallmentId || null,
         name: InstallmentName,
       };
-  
+
       try {
         setLoading(true);
         await axios.post(`${DOMAIN}/api/withdrawals`, payload);
@@ -95,28 +96,10 @@ export default function WithdrawalInstallment() {
       </div>
 
       {operationType === "withdrawProduct" && (
-        <div className="mb-4 relative">
-          <label className="block font-medium">اختر المنتج:</label>
-          <button
-            className="w-full p-2 border rounded-lg"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            {selectedProduct ? selectedProduct.name : "اختر المنتج"}
-          </button>
-          {isDropdownOpen && (
-            <ul className="absolute w-full bg-white border rounded-lg mt-1 max-h-48 overflow-auto">
-              {products.map((product) => (
-                <li
-                  key={product.id}
-                  className="p-2 hover:bg-gray-200 cursor-pointer"
-                  onClick={() => handleProductSelect(product)}
-                >
-                  {product.name}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <ProductList
+          products={products}
+          handleProductSelect={handleProductSelect}
+        />
       )}
 
       <div className="mb-4">

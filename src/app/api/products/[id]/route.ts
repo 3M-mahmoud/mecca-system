@@ -1,5 +1,6 @@
 import prisma from "@/utils/db";
 import { UpdateProductDto } from "@/utils/dtos";
+import { Supply, Withdrawal } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 interface props {
@@ -82,6 +83,43 @@ export async function PUT(request: NextRequest, { params }: props) {
   }
 }
 
+const deleteTransaction = (withdrawals: Withdrawal[], supplies: Supply[]) => {
+  withdrawals.map(async (withdrawal) => {
+    if (withdrawal.traderId) {
+      await prisma.traderCustomer.update({
+        where: { id: withdrawal.traderId },
+        data: {
+          balance: { increment: withdrawal.quantity * withdrawal.price },
+        }, // تقليل الرصيد لأن المخزن كان زاد بهذه الكمية
+      });
+    }
+    if (withdrawal.remainingId) {
+      await prisma.remainingCustomer.update({
+        where: { id: withdrawal.remainingId },
+        data: {
+          balance: { increment: withdrawal.quantity * withdrawal.price },
+        }, // تقليل الرصيد لأن المخزن كان زاد بهذه الكمية
+      });
+    }
+    if (withdrawal.InstallmentId) {
+      await prisma.installmentCustomer.update({
+        where: { id: withdrawal.InstallmentId },
+        data: {
+          balance: { increment: withdrawal.quantity * withdrawal.price },
+        }, // تقليل الرصيد لأن المخزن كان زاد بهذه الكمية
+      });
+    }
+  });
+  supplies.map(async (supply) => {
+    if (supply.traderCustomerId) {
+      await prisma.traderCustomer.update({
+        where: { id: supply.traderCustomerId },
+        data: { balance: { decrement: supply.quantity * supply.price } }, // تقليل الرصيد لأن المخزن كان زاد بهذه الكمية
+      });
+    }
+  });
+};
+
 /**
  * @method DELETE
  * @route ~/api/products/:id
@@ -99,13 +137,21 @@ export async function DELETE(request: NextRequest, { params }: props) {
         { status: 404 }
       );
     }
-    const deletedProduct = await prisma.product.delete({
-      where: { id: parseInt(id) },
+    const supplies = await prisma.supply.findMany({
+      where: { productId: +id },
     });
+    const withdrawals = await prisma.withdrawal.findMany({
+      where: { productId: +id },
+    });
+
+    deleteTransaction(withdrawals, supplies);
     await prisma.$transaction([
       prisma.withdrawal.deleteMany({ where: { productId: +id } }),
       prisma.supply.deleteMany({ where: { productId: +id } }),
     ]);
+    const deletedProduct = await prisma.product.delete({
+      where: { id: parseInt(id) },
+    });
     return NextResponse.json({ message: "نجح حذف المنتج" }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
