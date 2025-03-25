@@ -141,6 +141,7 @@ export default function ProductDetails({ id, typeUser }: props) {
         <>
           <h1 className="text-2xl font-bold">{product.name}</h1>
           <p className="text-gray-600">الفئة: {product.category}</p>
+          <p className="text-gray-600">الكمية: {product.count}</p>
           <div className="flex mt-4 gap-4 flex-col sm:flex-row">
             <button
               onClick={() => setActiveTab("withdrawals")}
