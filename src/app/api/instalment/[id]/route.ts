@@ -109,6 +109,10 @@ export async function DELETE(request: NextRequest, { params }: props) {
         { status: 404 }
       );
     }
+    await prisma.installmentCustomer.update({
+      where: { id: instalment.customerId },
+      data: { balance: { decrement: instalment.amount } },
+    });
     await prisma.installment.delete({
       where: { id: +id },
     });
