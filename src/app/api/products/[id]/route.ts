@@ -102,10 +102,11 @@ export async function DELETE(request: NextRequest, { params }: props) {
     const deletedProduct = await prisma.product.delete({
       where: { id: parseInt(id) },
     });
-    return NextResponse.json(
-      { message: "نجح حذف المنتج" },
-      { status: 200 }
-    );
+    await prisma.$transaction([
+      prisma.withdrawal.deleteMany({ where: { productId: +id } }),
+      prisma.supply.deleteMany({ where: { productId: +id } }),
+    ]);
+    return NextResponse.json({ message: "نجح حذف المنتج" }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "حدث خطا في السيرفر" },
