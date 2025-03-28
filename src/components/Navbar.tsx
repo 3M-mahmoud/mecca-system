@@ -14,9 +14,9 @@ const Navbar = ({ children, payload }: any) => {
   };
   const logoutHandler = async () => {
     try {
-      await axios.get(`${DOMAIN}/api/users/logout`);
+      const response = await axios.get(`${DOMAIN}/api/users/logout`);
       router.replace("/");
-      toast.success("Logout");
+      toast.success(response.data.message);
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");

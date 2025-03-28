@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       if (product) {
         await prisma.traderCustomer.update({
           where: { id: body.traderId },
-          data: { balance: { increment: product.price * body.quantity } },
+          data: { balance: { increment: body.price * body.quantity } },
         });
       } else {
         await prisma.traderCustomer.update({

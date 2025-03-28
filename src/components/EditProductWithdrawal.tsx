@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import style from "../app/loader.module.css";
+import CustomerList from "./CustomerList";
 
 export default function EditProductWithdrawal() {
   const searchParams = useSearchParams();
@@ -124,21 +125,11 @@ export default function EditProductWithdrawal() {
 
       {/* قائمة العملاء (تظهر عند اختيار عميل تجاري أو بواقي) */}
       {customerType && customerType !== "normal" && (
-        <div className="mb-4">
-          <label className="block font-medium">اختر العميل:</label>
-          <select
-            className="w-full p-2 border rounded-lg"
-            onChange={(e) => setSelectedCustomer(Number(e.target.value))}
-            value={selectedCustomer ?? ""}
-          >
-            <option value="">اختر العميل</option>
-            {customers.map((customer) => (
-              <option key={customer.id} value={customer.id}>
-                {customer.name}
-              </option>
-            ))}
-          </select>
-        </div>
+         <CustomerList
+         customers={customers}
+         selectedCustomer={selectedCustomer}
+         setSelectedCustomer={setSelectedCustomer}
+       />
       )}
 
       {/* إدخال الاسم */}
