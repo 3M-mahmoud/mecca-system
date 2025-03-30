@@ -222,25 +222,37 @@ export default function ProductDetails({ id, typeUser }: props) {
                   <span className="text-lg font-semibold ml-2">
                     {item.name}
                   </span>
-                  {"traderId" in item && item.traderId || "remainingId" in item && item.remainingId || "InstallmentId" in item && item.InstallmentId ? (
-                    <GoLinkExternal
-                      className="hover:text-blue-600 mt-1 cursor-pointer"
-                      onClick={() =>
-                        router.push(
-                          `${
-                            "traderId" in item && item.traderId !== null
-                              ? `/traders/${item.traderId}`
-                              : "remainingId" in item &&
-                                item.remainingId !== null
-                              ? `/remaining/${item.remainingId}`
-                              : "InstallmentId" in item &&
-                                item.InstallmentId !== null
-                              ? `/installments/${item.InstallmentId}`
-                              : "/withdrawals"
-                          }`
-                        )
-                      }
-                    />
+                  {("traderId" in item && item.traderId) ||
+                  ("remainingId" in item && item.remainingId) ||
+                  ("InstallmentId" in item && item.InstallmentId) ? (
+                    <span className="group relative">
+                      <GoLinkExternal
+                        className="hover:text-blue-600 mt-1 cursor-pointer"
+                        onClick={() =>
+                          router.push(
+                            `${
+                              "traderId" in item && item.traderId !== null
+                                ? `/traders/${item.traderId}`
+                                : "remainingId" in item &&
+                                  item.remainingId !== null
+                                ? `/remaining/${item.remainingId}`
+                                : "InstallmentId" in item &&
+                                  item.InstallmentId !== null
+                                ? `/installments/${item.InstallmentId}`
+                                : "/withdrawals"
+                            }`
+                          )
+                        }
+                      />
+                      <div className="hidden group-hover:block">
+                        <div className="group absolute -top-9 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2">
+                          <div className="rounded-sm bg-black py-1 px-2">
+                            <p className="whitespace-nowrap">الذهاب لصفحة العميل.</p>
+                          </div>
+                          <div className="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"></div>
+                        </div>
+                      </div>
+                    </span>
                   ) : null}
                 </h2>
                 <p className="text-gray-500">{item.description}</p>
