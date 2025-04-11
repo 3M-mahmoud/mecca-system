@@ -115,6 +115,7 @@ export async function PUT(request: NextRequest, { params }: props) {
       where: { id: +id },
       data: {
         amount: body.amount,
+        description: body.description,
         traderId: body.traderId,
         remainingId: body.remainingId,
       },

@@ -125,7 +125,10 @@ export default function RemainingDetails({ id, typeUser }: props) {
 
   const products = filteredData.filter((item) => item.productId !== null);
   const totalQuantity = products.reduce((sum, item) => sum + item.quantity, 0);
-  const totalProductPrice = products.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const totalProductPrice = products.reduce(
+    (sum, item) => sum + item.quantity * item.price,
+    0
+  );
   const totalPrice = filteredData.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
@@ -163,12 +166,14 @@ export default function RemainingDetails({ id, typeUser }: props) {
           <div className="flex items-center justify-between flex-col md:flex-row">
             <div className="mt-4 font-bold text-lg">
               إجمالي {activeTab === "payments" ? "الفلوس" : "الكمية"}:{" "}
-              {activeTab === "payments" ? totalPayments.toLocaleString("en-US") : totalQuantity.toLocaleString("en-US")}
+              {activeTab === "payments"
+                ? totalPayments.toLocaleString("en-US")
+                : totalQuantity.toLocaleString("en-US")}
             </div>
             {activeTab !== "payments" ? (
               <div className="mt-4 font-bold text-lg">
-              إجمالي فلوس الاجهزة: {totalProductPrice.toLocaleString("en-US")}
-            </div>
+                إجمالي فلوس الاجهزة: {totalProductPrice.toLocaleString("en-US")}
+              </div>
             ) : null}
             {activeTab !== "payments" ? (
               <div className="mt-4 font-bold text-lg">
@@ -227,26 +232,30 @@ export default function RemainingDetails({ id, typeUser }: props) {
                     </div>
                   )}
                   <h2 className="mt-4 sm:mt-0 flex items-center">
-                  <span className="text-lg font-semibold ml-2">
-                    {item.description}
-                  </span>
-                  {item.productId ? (
-                    <span className="group relative">
-                      <GoLinkExternal
-                      className="hover:text-blue-600 mt-1 cursor-pointer"
-                      onClick={() => router.push(`/product/${item.productId}`)}
-                    />
-                    <div className="hidden group-hover:block">
-                        <div className="group absolute -top-9 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2">
-                          <div className="rounded-sm bg-black py-1 px-2">
-                            <p className="whitespace-nowrap">الذهاب لصفحة المنتج</p>
-                          </div>
-                          <div className="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"></div>
-                        </div>
-                      </div>
+                    <span className="text-lg font-semibold ml-2">
+                      {item.description}
                     </span>
-                  ) : null}
-                </h2>
+                    {item.productId ? (
+                      <span className="group relative">
+                        <GoLinkExternal
+                          className="hover:text-blue-600 mt-1 cursor-pointer"
+                          onClick={() =>
+                            router.push(`/product/${item.productId}`)
+                          }
+                        />
+                        <div className="hidden group-hover:block">
+                          <div className="group absolute -top-9 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2">
+                            <div className="rounded-sm bg-black py-1 px-2">
+                              <p className="whitespace-nowrap">
+                                الذهاب لصفحة المنتج
+                              </p>
+                            </div>
+                            <div className="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"></div>
+                          </div>
+                        </div>
+                      </span>
+                    ) : null}
+                  </h2>
                   <p className="text-gray-500">{item.name}</p>
                   <p className="text-gray-700 mt-2">
                     التاريخ: {format(new Date(item.createdAt), "yyyy-MM-dd")}
@@ -288,6 +297,9 @@ export default function RemainingDetails({ id, typeUser }: props) {
                   <p className="text-gray-700 mt-2">
                     التاريخ: {format(new Date(item.createdAt), "yyyy-MM-dd")}
                   </p>
+                  <p className="text-gray-600 font-semibold">
+                    الوصف: {item.description}
+                  </p>
                   <p className="text-blue-600 font-semibold">
                     المبلغ: {item.amount}
                   </p>
@@ -295,7 +307,9 @@ export default function RemainingDetails({ id, typeUser }: props) {
               ))}
           </div>
         </>
-      ) : <p className="text-gray-500 text-center">لا يوجد نتائج</p>}
+      ) : (
+        <p className="text-gray-500 text-center">لا يوجد نتائج</p>
+      )}
     </div>
   );
 }

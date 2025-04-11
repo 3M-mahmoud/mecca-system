@@ -12,7 +12,15 @@ import { Payment } from "@prisma/client";
  */
 
 export async function GET(request: NextRequest) {
-  const payments = await prisma.payment.findMany();
+  const payments = await prisma.payment.findMany({
+    include: {
+      trader: true,
+      remaining: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
   return NextResponse.json(payments, { status: 200 });
 }
 
@@ -72,6 +80,7 @@ export async function POST(request: NextRequest) {
     const newPayment: Payment = await prisma.payment.create({
       data: {
         amount: body.amount,
+        description: body.description,
         traderId: body.traderId,
         remainingId: body.remainingId,
       },

@@ -74,6 +74,7 @@ model Withdrawal {
 model Payment {
   id          Int                @id @default(autoincrement())
   amount      Float
+  description String             @default("القيمة الافتراضية سداد")
   createdAt   DateTime           @default(now())
   updatedAt   DateTime           @updatedAt
   traderId    Int?

@@ -12,7 +12,8 @@ interface props {
 export default function Payment({ typePayment, typeCustomer }: props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState<number>(0);
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const id = searchParams.get("id") || "";
   const traderId = searchParams.get("traderId") || "";
@@ -22,6 +23,7 @@ export default function Payment({ typePayment, typeCustomer }: props) {
     if (!loading) {
       const payload = {
         amount: +price,
+        description: description,
         traderId: +traderId || null,
         remainingId: +remainingId || null,
       };
@@ -56,12 +58,21 @@ export default function Payment({ typePayment, typeCustomer }: props) {
       </h2>
 
       <div className="mb-4">
-        <label className="block font-medium">المبلغ:</label>
+        <label className="block font-medium">الوصف:</label>
         <input
           type="text"
           className="w-full p-2 border rounded-lg"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block font-medium">المبلغ:</label>
+        <input
+          type="number"
+          className="w-full p-2 border rounded-lg"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(+e.target.value)}
         />
       </div>
 

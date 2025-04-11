@@ -333,6 +333,9 @@ export default function TraderDetails({ id, typeUser }: props) {
                   <p className="text-gray-700 mt-2">
                     التاريخ: {format(new Date(item.createdAt), "yyyy-MM-dd")}
                   </p>
+                  <p className="text-gray-600 font-semibold">
+                    الوصف: {item.description}
+                  </p>
                   <p className="text-blue-600 font-semibold">
                     المبلغ: {item.amount}
                   </p>

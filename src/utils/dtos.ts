@@ -81,11 +81,13 @@ export interface CreateRemainingDto {
 }
 export interface CreatePaymentDto {
   amount: number;
+  description: string;
   traderId?: number | null;
   remainingId?: number | null;
 }
 export interface UpdatePaymentDto {
   amount?: number;
+  description?: string;
   traderId?: number | null;
   remainingId?: number | null;
 }

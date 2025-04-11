@@ -56,10 +56,13 @@ export type Supplies = {
 export type Payments = {
   id: number;
   amount: number;
+  description: string;
   createdAt: string;
   updatedAt: string;
   traderId: number | null;
   remainingId: number | null;
+  trader: Traders;
+  remaining: Traders;
 };
 export type Instalment = {
   id: number;

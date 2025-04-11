@@ -207,6 +207,12 @@ export const createPaymentSchema = z.object({
       invalid_type_error: "الملبغ يجب ان يكون رقم",
     })
     .min(1, { message: "يجب الا يقل المبلغ عن 1" }),
+  description: z
+    .string({
+      required_error: "الوصف مطلوب",
+      invalid_type_error: "الوصف يجب ان يكون نص",
+    })
+    .min(3, { message: "يجب الا يقل الوصف عن 3 احرف" }),
   traderId: z.number().nullable().optional(),
   remainingId: z.number().nullable().optional(),
 });
