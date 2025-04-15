@@ -142,12 +142,10 @@ export async function DELETE(request: NextRequest, { params }: props) {
     await prisma.$transaction([
       prisma.supply.deleteMany({ where: { traderCustomerId: +id } }),
       prisma.withdrawal.deleteMany({ where: { traderId: +id } }),
+      prisma.payment.deleteMany({ where: { traderId: +id } }),
       prisma.traderCustomer.delete({ where: { id: +id } }),
     ]);
-    return NextResponse.json(
-      { message: "نجح حذف التاجر" },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "نجح حذف التاجر" }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "حدث خطا في السيرفر" },

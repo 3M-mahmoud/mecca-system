@@ -124,6 +124,7 @@ export async function DELETE(request: NextRequest, { params }: props) {
     deleteTransaction(withdrawals);
     await prisma.$transaction([
       prisma.withdrawal.deleteMany({ where: { remainingId: +id } }),
+      prisma.payment.deleteMany({ where: { remainingId: +id } }),
       prisma.remainingCustomer.delete({ where: { id: +id } }),
     ]);
     return NextResponse.json(
